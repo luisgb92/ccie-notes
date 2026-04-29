@@ -2,7 +2,7 @@
 
 ### Leaf-1 UNDERLAY
 
-```
+```javascript
 feature ospf
 
 router ospf UNDERLAY
@@ -24,7 +24,7 @@ interface ethernet1/1
 ```
 ### Leaf-2 UNDERLAY
 
-```
+```javascript
 feature ospf
 
 router ospf UNDERLAY
@@ -46,7 +46,7 @@ interface ethernet1/1
 
 ### Spine-101 UNDERLAY
 
-```
+```javascript
 feature ospf
 
 router ospf UNDERLAY
@@ -88,7 +88,7 @@ Leaf-101# ping 1.0.0.2 source-interface loo0
 
 **3. From Spine-101 check OSPF neighbors**
 
-```
+```javascript
 Spine-101(config-if)# show ip ospf neighbors 
  OSPF Process ID UNDERLAY VRF default
  Total number of neighbors: 2
@@ -99,7 +99,7 @@ Spine-101(config-if)# show ip ospf neighbors
 
 ### Leaf-1 OVERLAY
 
-```
+```javascript
 feature bgp
 feature nv overlay
 nv overlay evpn
@@ -129,7 +129,7 @@ interface nve1
 
 ### Leaf-2 OVERLAY
 
-```
+```javascript
 feature bgp
 feature nv overlay
 nv overlay evpn
@@ -238,7 +238,7 @@ interface po1
 
 
 ## Leaf-2 to Leaf-1 VPC
-```python
+```javascript
 feature vpc
 feature lacp
 
