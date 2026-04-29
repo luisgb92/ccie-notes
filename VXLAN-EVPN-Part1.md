@@ -186,5 +186,50 @@ int mgmt0
 vpc domain 1
     peer-keepalive destination 192.168.1.2 source 192.168.1.1
     peer-switch
-    peer-gateway 
+    peer-gateway
+
+interface eth1/2
+    switchport mode trunk
+    channel-group 500 mode active
+
+interface po500
+    vpc peer-link
+
+interface eth1/3
+    switchport mode trunk
+    channel-group 1 mode active
+
+interface po1
+    vpc 1
+```
+
+
+## Leaf-2 to Leaf-1 VPC
+```
+feature vpc
+feature lacp
+
+int mgmt0
+    ip address 192.168.1.2/30
+    no shutdown
+
+vpc domain 1
+    peer-keepalive destination 192.168.1.1 source 192.168.1.2
+    peer-switch
+    peer-gateway
+
+interface eth1/2
+    switchport mode trunk
+    channel-group 500 mode active
+
+interface po500
+    vpc peer-link
+
+interface eth1/3
+    switchport mode trunk
+    channel-group 1 mode active
+
+interface po1
+    vpc 1
+
 ```
