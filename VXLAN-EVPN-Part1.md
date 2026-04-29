@@ -233,3 +233,23 @@ interface po1
     vpc 1
 
 ```
+
+## VLAN to VXLAN mapping
+
+```
+feature vn-segment-vlan-based
+
+vlan 10
+    vn-segment 10010
+vlan 20
+    vn-segment 10020
+
+interface nve1
+    source-interface loo1
+    host-reachability protocol bgp
+    member vni 10010
+        ingress-replication protocol bgp
+    member vni 10020
+        ingress-replication protocol bgp
+
+```
