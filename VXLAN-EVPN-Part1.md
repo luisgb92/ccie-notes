@@ -1,6 +1,6 @@
-# VXLAN BGP EVPN - OSPF Underlay
+# VXLAN BGP EVPN - Site-1
 
-### Leaf-1 UNDERLAY
+### Site1-L1 UNDERLAY
 
 ```javascript
 feature ospf
@@ -22,7 +22,7 @@ interface ethernet1/1
     no shutdown
 
 ```
-### Leaf-2 UNDERLAY
+### Site1-L2 UNDERLAY
 
 ```javascript
 feature ospf
@@ -44,7 +44,7 @@ interface ethernet1/1
     no shutdown
 ```
 
-### Spine-101 UNDERLAY
+### Site1-S101 UNDERLAY
 
 ```javascript
 feature ospf
@@ -72,24 +72,32 @@ interface ethernet1/2
     ip router ospf UNDERLAY area 0
     ip ospf network point-to-point
     no shutdown
+
+interface ethernet1/3
+    no switchport
+    medium p2p
+    ip unnumbered loo0
+    ip router ospf UNDERLAY area 0
+    ip ospf network point-to-point
+    no shutdown
 ```
 
 ### Troubleshoot the Underlay 
 
-**1. Ping between Loo0 from Spine-101 to Leaf-1**
+**1. Ping between Loo0 from Site1-S101 to Site1-L1**
 ```
-Spine-101# ping 1.0.0.1 source-interface loo0
-```
-
-**2. Ping between Loo0 from Spine-101 to Leaf-2**
-```
-Leaf-101# ping 1.0.0.2 source-interface loo0
+Site1-S101# ping 1.0.0.1 source-interface loo0
 ```
 
-**3. From Spine-101 check OSPF neighbors**
+**2. Ping between Loo0 from Site1-S101 to Site1-L2**
+```
+Site1-L101# ping 1.0.0.2 source-interface loo0
+```
+
+**3. From Site1-S101 check OSPF neighbors**
 
 ```javascript
-Spine-101(config-if)# show ip ospf neighbors 
+Site1-S101(config-if)# show ip ospf neighbors 
  OSPF Process ID UNDERLAY VRF default
  Total number of neighbors: 2
  Neighbor ID     Pri State            Up Time  Address         Interface
@@ -97,7 +105,7 @@ Spine-101(config-if)# show ip ospf neighbors
  1.0.0.2           1 FULL/ -          00:00:05 1.0.0.2         Eth1/2 
 ```
 
-### Leaf-1 OVERLAY
+### Site1-L1 OVERLAY
 
 ```javascript
 feature bgp
@@ -127,7 +135,7 @@ interface nve1
 ```
 
 
-### Leaf-2 OVERLAY
+### Site1-L2 OVERLAY
 
 ```javascript
 feature bgp
@@ -156,7 +164,7 @@ interface nve1
     no shutdown
 ```
 
-### Spine-101 OVERLAY
+### Site1-S101 OVERLAY
 
 ```
 feature bgp
@@ -185,10 +193,10 @@ interface loo1
 
 ### Troubleshoot the Overlay 
 
-**1. From Spine-101 check BGP L2VPN EVPN neighbors**
+**1. From Site1-S101 check BGP L2VPN EVPN neighbors**
 
 ```
-Spine-101(config-router-neighbor)# show bgp l2vpn evpn summary
+Site1-S101(config-router-neighbor)# show bgp l2vpn evpn summary
 BGP summary information for VRF default, address family L2VPN EVPN
 BGP router identifier 1.0.0.101, local AS number 65001
 BGP table version is 4, L2VPN EVPN config peers 2, capable peers 2
@@ -203,7 +211,7 @@ PfxRcd
 1.0.0.2         4 65001          6         10        4    0    0 00:00:15 0     
 ```
 
-## Leaf-1 to Leaf-2 VPC
+## Site1-L1 to Site1-L2 VPC
 ```
 feature vpc
 feature lacp
@@ -237,7 +245,7 @@ interface po1
 ```
 
 
-## Leaf-2 to Leaf-1 VPC
+## Site1-L2 to Site1-L1 VPC
 ```javascript
 feature vpc
 feature lacp
@@ -274,7 +282,7 @@ interface po1
 
 ## Define L2VNI VLAN to VXLAN mapping
 
-**1. Apply in both Leaf-1 and Leaf-2**
+**1. Apply in both Site1-L1 and Site1-L2**
 
 ```javascript
 feature vn-segment-vlan-based
@@ -302,6 +310,10 @@ feature interface-vlan
 
 vrf context Tenant-1
     vni 100001
+    rd auto
+    address-family ipv4 unicast
+        route-target both auto
+        route-target both auto evpn
 
 vrf context Tenant-2
     vni 100002
@@ -319,7 +331,7 @@ interface nve1
 ```
 
 
-## Configure Anycast GW on Leaf-1 and Leaf-2
+## Configure Anycast GW on Site1-L1 and Site1-L2
 
 ```javascript
 fabric forwarding anycast-gateway-mac 0001.0001.0001
@@ -335,5 +347,7 @@ interface vlan 20
     ip address 192.168.20.254/24
     fabric forwarding mode anycast-gateway
     no sh
+
+
 
 ```
