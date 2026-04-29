@@ -76,15 +76,17 @@ interface ethernet1/2
 
 ### Troubleshoot the Underlay 
 
-**Ping between Loo0 from Spine-101 to Leaf-1**
+**1. Ping between Loo0 from Spine-101 to Leaf-1**
 ```
 Spine-101# ping 1.0.0.1 source-interface loo0
 ```
 
-**Ping between Loo0 from Spine-101 to Leaf-2**
+**2. Ping between Loo0 from Spine-101 to Leaf-2**
 ```
 Leaf-101# ping 1.0.0.2 source-interface loo0
 ```
+
+**3. From Spine-101 check OSPF neighbors**
 
 ```
 Spine-101(config-if)# show ip ospf neighbors 
@@ -181,6 +183,26 @@ interface loo1
     ip address 1.0.1.101/32
     ip router ospf UNDERLAY area 0
     no shutdown
+```
+
+### Troubleshoot the Overlay 
+
+**1. From Spine-101 check BGP L2VPN EVPN neighbors**
+
+```
+Spine-101(config-router-neighbor)# show bgp l2vpn evpn summary
+BGP summary information for VRF default, address family L2VPN EVPN
+BGP router identifier 1.0.0.101, local AS number 65001
+BGP table version is 4, L2VPN EVPN config peers 2, capable peers 2
+0 network entries and 0 paths using 0 bytes of memory
+BGP attribute entries [0/0], BGP AS path entries [0/0]
+BGP community entries [0/0], BGP clusterlist entries [0/0]
+
+Neighbor        V    AS    MsgRcvd    MsgSent   TblVer  InQ OutQ Up/Down  State/
+PfxRcd
+1.0.0.1         4 65001          8          8        4    0    0 00:02:18 0     
+    
+1.0.0.2         4 65001          6         10        4    0    0 00:00:15 0     
 ```
 
 ## Leaf-1 to Leaf-2 VPC
