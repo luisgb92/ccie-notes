@@ -167,5 +167,24 @@ router bgp 65001
         inherit peer iBGP-Spine2leaf
     neighbor 1.0.0.2
         inherit peer iBGP-Spine2leaf
+
+interface loo1
+    ip address 1.0.1.101/32
+    ip router ospf UNDERLAY area 0
+    no shutdown
 ```
 
+## Leaf-1 to Leaf-2 VPC
+```
+feature vpc
+feature lacp
+
+int mgmt0
+    ip address 192.168.1.1/30
+    no shutdown
+
+vpc domain 1
+    peer-keepalive destination 192.168.1.2 source 192.168.1.1
+    peer-switch
+    peer-gateway 
+```
