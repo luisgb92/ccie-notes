@@ -147,7 +147,7 @@ router bgp 65002
     address-family ipv4 unicast
         redistribute direct route-map RMAP-REDIST-DIRECT
         maximum-paths 4
-    neighbor 172.16.2.1 remote-as 65100
+    neighbor 172.16.2.2 remote-as 65100
         update-source eth1/2
         address-family ipv4 unicast
 ```
