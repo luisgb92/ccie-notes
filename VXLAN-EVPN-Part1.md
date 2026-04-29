@@ -60,7 +60,7 @@ interface loo0
 interface ethernet1/1
     no switchport
     medium p2p
-    ip unnnumbered loo0
+    ip unnumbered loo0
     ip router ospf UNDERLAY area 0
     ip ospf network point-to-point
     no shutdown
