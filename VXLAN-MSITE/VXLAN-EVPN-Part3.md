@@ -33,15 +33,15 @@ interface eth1/1
 feature ospf 
 
 router ospf UNDERLAY
-    router-id 1.0.0.111
+    router-id 2.0.0.111
 
 interface loo0
-    ip add 1.0.0.111/32 tag 54321
+    ip add 2.0.0.111/32 tag 54321
     ip router ospf UNDERLAY area 0
     no shutdown
 
 interface loo1
-    ip add 1.0.1.111/32 tag 54321
+    ip add 2.0.1.111/32 tag 54321
     ip router ospf UNDERLAY area 0
     no shutdown
 
