@@ -298,6 +298,8 @@ interface nve1
 ## Define L3VNI VLAN to VXLAN mapping
 
 ```javascript
+feature interface-vlan
+
 vrf context Tenant-1
     vni 100001
 
@@ -320,8 +322,6 @@ interface nve1
 ## Configure Anycast GW on Leaf-1 and Leaf-2
 
 ```javascript
-feature interface-vlan
-
 fabric forwarding anycast-gateway-mac 0001.0001.0001
 
 interface vlan 10
