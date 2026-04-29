@@ -78,12 +78,21 @@ interface ethernet1/2
 
 **Ping between Loo0 from Spine-101 to Leaf-1**
 ```
-Leaf-1# ping 1.0.0.1 source-interface loo0
+Spine-101# ping 1.0.0.1 source-interface loo0
 ```
 
 **Ping between Loo0 from Spine-101 to Leaf-2**
 ```
-Leaf-1# ping 1.0.0.2 source-interface loo0
+Leaf-101# ping 1.0.0.2 source-interface loo0
+```
+
+```
+Spine-101(config-if)# show ip ospf neighbors 
+ OSPF Process ID UNDERLAY VRF default
+ Total number of neighbors: 2
+ Neighbor ID     Pri State            Up Time  Address         Interface
+ 1.0.0.1           1 FULL/ -          00:01:05 1.0.0.1         Eth1/1 
+ 1.0.0.2           1 FULL/ -          00:00:05 1.0.0.2         Eth1/2 
 ```
 
 ### Leaf-1 OVERLAY
