@@ -272,7 +272,7 @@ interface po1
 
 ```
 
-## VLAN to VXLAN mapping
+## Define L2VNI VLAN to VXLAN mapping
 
 **1. Apply in both Leaf-1 and Leaf-2**
 
@@ -291,5 +291,49 @@ interface nve1
         ingress-replication protocol bgp
     member vni 10020
         ingress-replication protocol bgp
+
+```
+
+
+## Define L3VNI VLAN to VXLAN mapping
+
+```javascript
+vrf context Tenant-1
+    vni 100001
+
+vrf context Tenant-2
+    vni 100002
+
+vlan 1000
+    vn-segment 100001
+
+interface vlan 1000
+    vrf member Tenant-1
+    ip forward
+    no shutdown
+
+interface nve1
+    member vni 100001 associate-vrf
+```
+
+
+## Configure Anycast GW on Leaf-1 and Leaf-2
+
+```javascript
+feature interface-vlan
+
+fabric forwarding anycast-gateway-mac 0001.0001.0001
+
+interface vlan 10
+    vrf member Tenant-1
+    ip address 192.168.10.254/24
+    fabric forwarding mode anycast-gateway
+    no sh
+
+interface vlan 20
+    vrf member Tenant-1
+    ip address 192.168.20.254/24
+    fabric forwarding mode anycast-gateway
+    no sh
 
 ```
