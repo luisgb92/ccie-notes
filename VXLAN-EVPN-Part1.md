@@ -238,7 +238,7 @@ interface po1
 
 
 ## Leaf-2 to Leaf-1 VPC
-```
+```python
 feature vpc
 feature lacp
 
