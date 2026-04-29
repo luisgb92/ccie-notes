@@ -117,7 +117,6 @@ router bgp 65001
 
 interface loo1
     ip address 1.0.1.1/32
-    ip address 1.0.1.121/32 secondary
     ip router ospf UNDERLAY area 0
     no shutdown
 
@@ -148,7 +147,6 @@ router bgp 65001
 
 interface loo1
     ip address 1.0.1.2/32
-    ip address 1.0.1.121/32 secondary
     ip router ospf UNDERLAY area 0
     no shutdown
 
@@ -210,6 +208,9 @@ PfxRcd
 feature vpc
 feature lacp
 
+interface loo1
+    ip address 1.0.1.121/32 secondary
+
 int mgmt0
     ip address 192.168.1.1/30
     no shutdown
@@ -221,6 +222,7 @@ vpc domain 1
 
 interface eth1/2
     switchport mode trunk
+    switchport trunk allowed vlan all
     channel-group 500 mode active
 
 interface po500
@@ -240,6 +242,10 @@ interface po1
 feature vpc
 feature lacp
 
+interface loo1
+    ip address 1.0.1.121/32 secondary
+
+
 int mgmt0
     ip address 192.168.1.2/30
     no shutdown
@@ -251,6 +257,7 @@ vpc domain 1
 
 interface eth1/2
     switchport mode trunk
+    switchport trunk allowed vlan all
     channel-group 500 mode active
 
 interface po500
