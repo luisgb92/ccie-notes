@@ -68,6 +68,7 @@ interface loo100
 interface eth1/2
     no switchport
     ip address 172.16.1.1/30 tag 54321
+    no shutdown
 
 route-map RMAP-REDIST-DIRECT permit 10
     match tag 54321
@@ -111,7 +112,7 @@ int eth1/3
 
 router bgp 65100
     router-id 65.100.0.0
-    address-family ip4 unicast
+    address-family ipv4 unicast
         redistribute direct route-map RMAP-REDIST-DIRECT
         maximum-paths 4
     neighbor 172.16.1.1 remote-as 65001
@@ -126,26 +127,27 @@ router bgp 65100
 ### Site2-BGW1 External-Underlay
 
 ```python
-feature ospf 
+feature bgp
 
-router ospf UNDERLAY
-    router-id 2.0.0.111
+route-map RMAP-REDIST-DIRECT permit 10
+    match tag 54321
 
-interface loo0
-    ip add 2.0.0.111/32 tag 54321
+interface loo100
+    ip address 2.0.100.111/32 tag 54321
     ip router ospf UNDERLAY area 0
     no shutdown
 
-interface loo1
-    ip add 2.0.1.111/32 tag 54321
-    ip router ospf UNDERLAY area 0
-    no shutdown
-
-interface eth1/3
+interface eth1/2
     no switchport
-    medium p2p
-    ip unnumbered loo0
-    ip router ospf UNDERLAY area 0
-    ip ospf network point-to-point
+    ip address 172.16.2.1/30 tag 54321
     no shutdown
+
+router bgp 65002
+    router-id 2.0.0.111
+    address-family ipv4 unicast
+        redistribute direct route-map RMAP-REDIST-DIRECT
+        maximum-paths 4
+    neighbor 172.16.2.1 remote-as 65100
+        update-source eth1/2
+        address-family ipv4 unicast
 ```
