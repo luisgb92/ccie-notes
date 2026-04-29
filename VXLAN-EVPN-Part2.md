@@ -106,3 +106,72 @@ interface loo1
     ip router ospf UNDERLAY area 0
     no shutdown
 ```
+
+## Define L2VNI VLAN to VXLAN mapping
+
+**1. Apply in both Site1-L1 and Site1-L2**
+
+```javascript
+feature vn-segment-vlan-based
+
+vlan 10
+    vn-segment 10010
+vlan 20
+    vn-segment 10020
+
+interface nve1
+    source-interface loo1
+    host-reachability protocol bgp
+    member vni 10010
+        ingress-replication protocol bgp
+    member vni 10020
+        ingress-replication protocol bgp
+
+```
+
+
+### Define L3VNI VLAN to VXLAN mapping
+
+```javascript
+feature interface-vlan
+
+vrf context Tenant-1
+    vni 100001
+    rd auto
+    address-family ipv4 unicast
+        route-target both auto
+        route-target both auto evpn
+
+vrf context Tenant-2
+    vni 100002
+
+vlan 1000
+    vn-segment 100001
+
+interface vlan 1000
+    vrf member Tenant-1
+    ip forward
+    no shutdown
+
+interface nve1
+    member vni 100001 associate-vrf
+```
+
+
+### Configure Anycast GW on Site2-L1 and Site2-L2
+
+```javascript
+fabric forwarding anycast-gateway-mac 0001.0001.0001
+
+interface vlan 10
+    vrf member Tenant-1
+    ip address 192.168.10.254/24
+    fabric forwarding mode anycast-gateway
+    no sh
+
+interface vlan 20
+    vrf member Tenant-1
+    ip address 192.168.20.254/24
+    fabric forwarding mode anycast-gateway
+    no sh
+```
