@@ -274,7 +274,9 @@ interface po1
 
 ## VLAN to VXLAN mapping
 
-```
+**1. Apply in both Leaf-1 and Leaf-2**
+
+```javascript
 feature vn-segment-vlan-based
 
 vlan 10
