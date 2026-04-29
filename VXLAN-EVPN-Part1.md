@@ -136,7 +136,7 @@ nv overlay evpn
 router bgp 65001
     router-id 1.0.0.2
     address-family l2vpn evpn
-    template peer iBGP-Leaf2spine
+    template peer iBGP-Leaf2Spine
         remote-as 65001
         update-source loo0
         address-family l2vpn evpn
@@ -173,9 +173,9 @@ router bgp 65001
             send-community both
             route-reflector-client
     neighbor 1.0.0.1
-        inherit peer iBGP-Spine2leaf
+        inherit peer iBGP-Spine2Leaf
     neighbor 1.0.0.2
-        inherit peer iBGP-Spine2leaf
+        inherit peer iBGP-Spine2Leaf
 
 interface loo1
     ip address 1.0.1.101/32
