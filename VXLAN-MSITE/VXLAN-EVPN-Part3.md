@@ -204,8 +204,17 @@ router bgp 65001
         address-family l2vpn evpn
             send-community both
             rewrite-evpn-rt-asn
+    template peer iBGP-BGW2Spine
+        remote-as 65001
+        update-source loopback0
+            address-family l2vpn evpn
+            send-community
+            send-community extended
     neighbor 65.100.0.0
         inherit peer eBGP-BGW2DCI
+    neighbor 1.0.0.101
+        inherit peer iBGP-BGW2Spine
+    
 
 evpn multisite border-gateway 101
 

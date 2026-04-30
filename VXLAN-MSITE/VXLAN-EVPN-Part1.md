@@ -184,6 +184,8 @@ router bgp 65001
         inherit peer iBGP-Spine2Leaf
     neighbor 1.0.0.2
         inherit peer iBGP-Spine2Leaf
+    neighbor 1.0.0.111
+        inherit peer iBGP-Spine2Leaf
 
 interface loo1
     ip address 1.0.1.101/32
@@ -347,7 +349,4 @@ interface vlan 20
     ip address 192.168.20.254/24
     fabric forwarding mode anycast-gateway
     no sh
-
-
-
 ```

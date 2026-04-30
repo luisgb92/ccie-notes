@@ -100,6 +100,8 @@ router bgp 65002
             route-reflector-client
     neighbor 2.0.0.1
         inherit peer iBGP-Spine2Leaf
+    neighbor 2.0.0.111
+        inherit peer iBGP-Spine2Leaf
 
 interface loo1
     ip address 2.0.1.101/32
