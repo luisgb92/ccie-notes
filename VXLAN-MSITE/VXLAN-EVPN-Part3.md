@@ -151,3 +151,105 @@ router bgp 65002
         update-source eth1/2
         address-family ipv4 unicast
 ```
+
+### Site1-BGW VXLAN Mapping
+
+```python
+feature nv overlay
+feature vn-segment-vlan-based
+
+vlan 10
+    vn-segment 10010
+vlan 20
+    vn-segment 10020
+vlan 1000
+    vn-segment 100001
+
+vrf context Tenant-1
+    vni 100001
+    rd auto
+    address-family ipv4 unicast
+        route-target both auto
+        route-target both auto evpn
+
+interface vlan 1000
+    vrf member Tenant-1
+    ip forward
+    no shutdown
+
+interface nve1
+    host-reachability protocol bgp
+    source-interface loo1
+    member vni 10010
+        ingress-replication protocol bgp
+    member vni 10020
+        ingress-replication protocol bgp
+    member vni 100001 associate-vrf
+    no shutdown
+```
+
+### Site1-BGW1 External Overlay to DCI
+
+```python
+feature nv overlay
+nv overlay evpn
+
+router bgp 65001
+    address-family l2vpn evpn
+    template peer eBGP-BGW2DCI
+        remote-as 65100
+        update-source loo0
+        ebgp-multihop 5
+        peer-type fabric-external
+        address-family l2vpn evpn
+            send-community both
+            rewrite-evpn-rt-asn
+    neighbor 65.100.0.0
+        inherit peer eBGP-BGW2DCI
+
+evpn multisite border-gateway 101
+
+interface eth1/1
+    evpn multisite fabric-tracking
+
+interface eth1/2
+    evpn multisite dci-tracking
+
+interface nve1
+    multisite border-gateway interface loo100
+    member vni 10010
+        multisite ingress-replication
+    member vni 10020
+        multisite ingress-replication
+
+
+```
+
+### DCI to Site1-BGW1 Overlay
+
+```python
+feature nv overlay
+nv overlay evpn
+
+route-map UNCHANGED permit 10
+    set ip next-hop unchanged
+
+router bgp 65100
+    address-family l2vpn evpn
+    retain route-target all
+    template peer eBGP-DCI2BGW
+        update-source loo0
+        ebgp-multihop 5
+        address-family l2vpn evpn
+            send-community both
+            route-map UNCHANGED out
+            rewrite-evpn-rt-asn
+    neighbor 1.0.0.111
+        remote-as 65001
+        inherit peer eBGP-DCI2BGW
+    neighbor 2.0.0.111
+        remote-as 65002
+        inherit peer eBGP-DCI2BGW
+
+```
+
