@@ -193,7 +193,7 @@ PfxRcd
 
 ## 3. VLAN to VXLAN Mapping L2VNI/L3VNI
 
-### Define L2VNI VLAN to VXLAN mapping
+### Define L2VNI on Leaf switches and BGWs
 
 ```python
 feature vn-segment-vlan-based
@@ -214,7 +214,7 @@ interface nve1
 
 ### Troubleshoot L2VNI
 
-**1. Check from Leaf switch that VLAN to VXLAN mapping is up and running**
+**1. Check from Leaf switch and BGWs that VLAN to VXLAN mapping is up and running**
 
 ```python
 Leaf1_S1(config-if-nve-vni)# show nve vni
