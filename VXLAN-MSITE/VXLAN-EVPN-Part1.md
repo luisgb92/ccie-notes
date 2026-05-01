@@ -78,7 +78,7 @@ interface ethernet1/1
 
 ### Troubleshoot the Underlay 
 
-**1. From Site1 Spine101 check OSPF neighbors**
+**1. From Site1 Spine-101 check OSPF neighbors**
 
 ```python
 Site1-S101(config)# show ip ospf neighbors 
@@ -210,6 +210,26 @@ interface nve1
         ingress-replication protocol bgp
     member vni 10020
         ingress-replication protocol bgp
+```
+
+### Validate L2VNI
+
+**1. Check from Leaf switch that VLAN to VXLAN mapping is up and running**
+
+```python
+Leaf1_S1(config-if-nve-vni)# show nve vni
+Codes: CP - Control Plane        DP - Data Plane          
+       UC - Unconfigured         SA - Suppress ARP        
+       S-ND - Suppress ND        
+       SU - Suppress Unknown Unicast 
+       Xconn - Crossconnect      
+       MS-IR - Multisite Ingress Replication 
+       HYB - Hybrid IRB mode
+    
+Interface VNI      Multicast-group   State Mode Type [BD/VRF]      Flags
+--------- -------- ----------------- ----- ---- ------------------ -----
+nve1      10010    UnicastBGP        Up    CP   L2 [10]                 
+nve1      10020    UnicastBGP        Up    CP   L2 [20]                 
 ```
 
 ### Define L3VNI VLAN to VXLAN mapping
