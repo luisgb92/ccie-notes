@@ -275,6 +275,15 @@ interface vlan 20
     no sh
 ```
 
+### Add the SVIs to IPV4 unicast family
+
+```python
+router bgp 65001
+    address-family ipv4 unicast
+        redistribute direct route-map permit-all
+
+```
+
 ## Optional VPC
 
 ### Site1-L1 to Site1-L2 VPC
