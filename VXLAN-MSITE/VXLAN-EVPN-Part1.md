@@ -1,8 +1,8 @@
 # VXLAN BGP EVPN - Site-1
 
-### Site1-L1 UNDERLAY
+### Site1-Leaf1 UNDERLAY
 
-```javascript
+```python
 feature ospf
 
 router ospf UNDERLAY
@@ -20,33 +20,11 @@ interface ethernet1/1
     ip router ospf UNDERLAY area 0
     ip ospf network point-to-point
     no shutdown
-
-```
-### Site1-L2 UNDERLAY
-
-```javascript
-feature ospf
-
-router ospf UNDERLAY
-    router-id 1.0.0.2
-
-interface loo0
-    ip address 1.0.0.2/32
-    ip router ospf UNDERLAY area 0
-    no shutdown
-
-interface ethernet1/1
-    no switchport
-    medium p2p
-    ip unnumbered loo0
-    ip router ospf UNDERLAY area 0
-    ip ospf network point-to-point
-    no shutdown
 ```
 
-### Site1-S101 UNDERLAY
+### Site1-Spine101 UNDERLAY
 
-```javascript
+```python
 feature ospf
 
 router ospf UNDERLAY
@@ -72,8 +50,22 @@ interface ethernet1/2
     ip router ospf UNDERLAY area 0
     ip ospf network point-to-point
     no shutdown
+```
 
-interface ethernet1/3
+### Site1-BGW1 UNDERLAY
+
+```python
+feature ospf
+
+router ospf UNDERLAY
+    router-id 1.0.0.111
+
+interface loo0
+    ip address 1.0.0.111/32
+    ip router ospf UNDERLAY area 0
+    no shutdown
+
+interface ethernet1/1
     no switchport
     medium p2p
     ip unnumbered loo0
@@ -84,19 +76,9 @@ interface ethernet1/3
 
 ### Troubleshoot the Underlay 
 
-**1. Ping between Loo0 from Site1-S101 to Site1-L1**
-```
-Site1-S101# ping 1.0.0.1 source-interface loo0
-```
+**1. From Site1-Spine101 check OSPF neighbors**
 
-**2. Ping between Loo0 from Site1-S101 to Site1-L2**
-```
-Site1-L101# ping 1.0.0.2 source-interface loo0
-```
-
-**3. From Site1-S101 check OSPF neighbors**
-
-```javascript
+```python
 Site1-S101(config-if)# show ip ospf neighbors 
  OSPF Process ID UNDERLAY VRF default
  Total number of neighbors: 2
@@ -105,9 +87,9 @@ Site1-S101(config-if)# show ip ospf neighbors
  1.0.0.2           1 FULL/ -          00:00:05 1.0.0.2         Eth1/2 
 ```
 
-### Site1-L1 OVERLAY
+### Site1-Leaf1 OVERLAY
 
-```javascript
+```python
 feature bgp
 feature nv overlay
 nv overlay evpn
@@ -115,13 +97,13 @@ nv overlay evpn
 router bgp 65001
     router-id 1.0.0.1
     address-family l2vpn evpn
-    template peer iBGP-Leaf2Spine
+    template peer Leaf2Spine
         remote-as 65001
         update-source loo0
         address-family l2vpn evpn
             send-community both
     neighbor 1.0.0.101
-        inherit peer iBGP-Leaf2Spine
+        inherit peer Leaf2Spine
 
 interface loo1
     ip address 1.0.1.1/32
@@ -134,18 +116,39 @@ interface nve1
     no shutdown
 ```
 
+### Site1-Spine101 OVERLAY
 
-### Site1-L2 OVERLAY
-
-```javascript
+```python
 feature bgp
 feature nv overlay
 nv overlay evpn
 
 router bgp 65001
-    router-id 1.0.0.2
+    router-id 1.0.0.101
     address-family l2vpn evpn
-    template peer iBGP-Leaf2Spine
+    template peer Spine2Leaf
+        remote-as 65001
+        update-source loo0
+        address-family l2vpn evpn
+            send-community both
+            route-reflector-client
+    neighbor 1.0.0.1
+        inherit peer Spine2Leaf
+    neighbor 1.0.0.111
+        inherit peer Spine2Leaf
+```
+
+### Site1-BGW1 OVERLAY
+
+```python
+feature bgp
+feature nv overlay
+nv overlay evpn
+
+router bgp 65001
+    router-id 1.0.0.111
+    address-family l2vpn evpn
+    template peer Leaf2Spine
         remote-as 65001
         update-source loo0
         address-family l2vpn evpn
@@ -154,7 +157,7 @@ router bgp 65001
         inherit peer iBGP-Leaf2Spine
 
 interface loo1
-    ip address 1.0.1.2/32
+    ip address 1.0.1.111/32
     ip router ospf UNDERLAY area 0
     no shutdown
 
@@ -164,34 +167,7 @@ interface nve1
     no shutdown
 ```
 
-### Site1-S101 OVERLAY
 
-```
-feature bgp
-feature nv overlay
-nv overlay evpn
-
-router bgp 65001
-    router-id 1.0.0.101
-    address-family l2vpn evpn
-    template peer iBGP-Spine2Leaf
-        remote-as 65001
-        update-source loo0
-        address-family l2vpn evpn
-            send-community both
-            route-reflector-client
-    neighbor 1.0.0.1
-        inherit peer iBGP-Spine2Leaf
-    neighbor 1.0.0.2
-        inherit peer iBGP-Spine2Leaf
-    neighbor 1.0.0.111
-        inherit peer iBGP-Spine2Leaf
-
-interface loo1
-    ip address 1.0.1.101/32
-    ip router ospf UNDERLAY area 0
-    no shutdown
-```
 
 ### Troubleshoot the Overlay 
 
@@ -248,7 +224,7 @@ interface po1
 
 
 ## Site1-L2 to Site1-L1 VPC
-```javascript
+```python
 feature vpc
 feature lacp
 
@@ -286,7 +262,7 @@ interface po1
 
 **1. Apply in both Site1-L1 and Site1-L2**
 
-```javascript
+```python
 feature vn-segment-vlan-based
 
 vlan 10
@@ -307,7 +283,7 @@ interface nve1
 
 ## Define L3VNI VLAN to VXLAN mapping
 
-```javascript
+```python
 feature interface-vlan
 
 vrf context Tenant-1
@@ -335,7 +311,7 @@ interface nve1
 
 ## Configure Anycast GW on Site1-L1 and Site1-L2
 
-```javascript
+```python
 fabric forwarding anycast-gateway-mac 0001.0001.0001
 
 interface vlan 10
