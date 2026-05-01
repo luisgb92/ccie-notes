@@ -171,7 +171,6 @@ interface nve1
     no shutdown
 ```
 
-
 ### Troubleshoot the Overlay 
 
 **1. From Site1-S101 check BGP L2VPN EVPN neighbors**
@@ -192,9 +191,7 @@ PfxRcd
 1.0.0.111       4 65001         69         76        5    0    0 01:04:00 0
 ```
 
-
 ## PART-3 (VLAN to VXLAN Mapping L2VNI/L3VNI)
-
 
 ### Define L2VNI VLAN to VXLAN mapping
 
@@ -217,7 +214,6 @@ interface nve1
         ingress-replication protocol bgp
 
 ```
-
 
 ### Define L3VNI VLAN to VXLAN mapping
 
@@ -246,7 +242,6 @@ interface nve1
     member vni 100001 associate-vrf
 ```
 
-
 ## Configure Anycast GW on Site1-L1 and Site1-L2
 
 ```python
@@ -264,7 +259,6 @@ interface vlan 20
     fabric forwarding mode anycast-gateway
     no sh
 ```
-
 
 ## Optional VPC
 
@@ -301,7 +295,6 @@ interface eth1/3
 interface po1
     vpc 1
 ```
-
 
 ## Site1-L2 to Site1-L1 VPC
 ```python
