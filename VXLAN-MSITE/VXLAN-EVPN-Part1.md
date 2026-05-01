@@ -278,6 +278,8 @@ interface vlan 20
 ### Add the SVIs to IPV4 unicast family
 
 ```python
+route-map permit-all
+
 router bgp 65001
     address-family ipv4 unicast
         redistribute direct route-map permit-all
