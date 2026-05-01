@@ -1,8 +1,8 @@
 # VXLAN BGP EVPN Site-1
 
-## PART1 [VXLAN Underlay]
+## 1. VXLAN Underlay
 
-### Site1 Leaf1
+### Site1 Leaf-1
 
 ```python
 feature ospf
@@ -24,7 +24,7 @@ interface ethernet1/1
     no shutdown
 ```
 
-### Site1 Spine101
+### Site1 Spine-101
 
 ```python
 feature ospf
@@ -54,7 +54,7 @@ interface ethernet1/2
     no shutdown
 ```
 
-### Site1 BGW1
+### Site1 BGW-1
 
 ```python
 feature ospf
@@ -89,9 +89,9 @@ Site1-S101(config)# show ip ospf neighbors
  1.0.0.111         1 FULL/ -          00:15:03 1.0.0.111       Eth1/2 
 ```
 
-## PART2 [VXLAN OVERLAY]
+## 2. VXLAN Overlay
 
-### Site1 Leaf1 OVERLAY
+### Site1 Leaf-1
 
 ```python
 feature bgp
@@ -120,7 +120,7 @@ interface nve1
     no shutdown
 ```
 
-### Site1 Spine101 OVERLAY
+### Site1 Spine-101
 
 ```python
 feature bgp
@@ -142,7 +142,7 @@ router bgp 65001
         inherit peer Spine2Leaf
 ```
 
-### Site1-BGW1 OVERLAY
+### Site1 BGW-1
 
 ```python
 feature bgp
@@ -191,7 +191,7 @@ PfxRcd
 1.0.0.111       4 65001         69         76        5    0    0 01:04:00 0
 ```
 
-## PART-3 (VLAN to VXLAN Mapping L2VNI/L3VNI)
+## 3. VLAN to VXLAN Mapping L2VNI/L3VNI
 
 ### Define L2VNI VLAN to VXLAN mapping
 
@@ -239,7 +239,7 @@ interface nve1
     member vni 100001 associate-vrf
 ```
 
-## Configure Anycast GW on Site1-L1 and Site1-L2
+## Configure Anycast GW on Leaf switch
 
 ```python
 fabric forwarding anycast-gateway-mac 0001.0001.0001
