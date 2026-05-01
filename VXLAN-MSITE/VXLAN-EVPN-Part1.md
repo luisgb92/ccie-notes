@@ -212,7 +212,7 @@ interface nve1
         ingress-replication protocol bgp
 ```
 
-### Validate L2VNI
+### Troubleshoot L2VNI
 
 **1. Check from Leaf switch that VLAN to VXLAN mapping is up and running**
 
