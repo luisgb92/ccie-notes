@@ -244,10 +244,8 @@ vrf context Tenant-1
         route-target both auto
         route-target both auto evpn
 
-vrf context Tenant-2
-    vni 100002
-
-vlan 1000
+vlan 1001
+    name L3VNI Tenant-1
     vn-segment 100001
 
 interface vlan 1000
