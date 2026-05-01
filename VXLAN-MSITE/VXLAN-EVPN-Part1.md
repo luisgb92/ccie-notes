@@ -239,7 +239,7 @@ interface nve1
     member vni 100001 associate-vrf
 ```
 
-## Configure Anycast GW on Leaf switch
+### Configure Anycast GW on Leaf switch
 
 ```python
 fabric forwarding anycast-gateway-mac 0001.0001.0001
@@ -325,5 +325,4 @@ interface eth1/3
 
 interface po1
     vpc 1
-
 ```
