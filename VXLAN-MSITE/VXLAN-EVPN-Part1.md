@@ -1,8 +1,8 @@
-# VXLAN BGP EVPN - Site-1
+# VXLAN BGP EVPN Site-1
 
-## PART-1 (VXLAN UNDERLAY)
+## PART1 [VXLAN Underlay]
 
-### Site1-Leaf1 UNDERLAY
+### Site1 Leaf1
 
 ```python
 feature ospf
@@ -24,7 +24,7 @@ interface ethernet1/1
     no shutdown
 ```
 
-### Site1-Spine101 UNDERLAY
+### Site1 Spine101
 
 ```python
 feature ospf
@@ -54,7 +54,7 @@ interface ethernet1/2
     no shutdown
 ```
 
-### Site1-BGW1 UNDERLAY
+### Site1 BGW1
 
 ```python
 feature ospf
@@ -78,7 +78,7 @@ interface ethernet1/1
 
 ### Troubleshoot the Underlay 
 
-**1. From Site1-Spine101 check OSPF neighbors**
+**1. From Site1 Spine101 check OSPF neighbors**
 
 ```python
 Site1-S101(config)# show ip ospf neighbors 
@@ -89,9 +89,9 @@ Site1-S101(config)# show ip ospf neighbors
  1.0.0.111         1 FULL/ -          00:15:03 1.0.0.111       Eth1/2 
 ```
 
-## PART-2 (VXLAN OVERLAY)
+## PART2 [VXLAN OVERLAY]
 
-### Site1-Leaf1 OVERLAY
+### Site1 Leaf1 OVERLAY
 
 ```python
 feature bgp
@@ -120,7 +120,7 @@ interface nve1
     no shutdown
 ```
 
-### Site1-Spine101 OVERLAY
+### Site1 Spine101 OVERLAY
 
 ```python
 feature bgp
@@ -210,7 +210,6 @@ interface nve1
         ingress-replication protocol bgp
     member vni 10020
         ingress-replication protocol bgp
-
 ```
 
 ### Define L3VNI VLAN to VXLAN mapping
