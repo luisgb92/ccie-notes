@@ -154,7 +154,7 @@ router bgp 65001
         address-family l2vpn evpn
             send-community both
     neighbor 1.0.0.101
-        inherit peer iBGP-Leaf2Spine
+        inherit peer Leaf2Spine
 
 interface loo1
     ip address 1.0.1.111/32

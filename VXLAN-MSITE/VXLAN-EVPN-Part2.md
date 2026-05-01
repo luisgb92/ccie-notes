@@ -138,7 +138,7 @@ router bgp 65002
         inherit peer Spine2Leaf
 ```
 
-### Site1-BGW1 OVERLAY
+### Site2-BGW1 OVERLAY
 
 ```python
 feature bgp
@@ -154,7 +154,7 @@ router bgp 65002
         address-family l2vpn evpn
             send-community both
     neighbor 2.0.0.101
-        inherit peer iBGP-Leaf2Spine
+        inherit peer Leaf2Spine
 
 interface loo1
     ip address 2.0.1.111/32
