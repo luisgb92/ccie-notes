@@ -248,7 +248,7 @@ vlan 1001
     name L3VNI Tenant-1
     vn-segment 100001
 
-interface vlan 1000
+interface vlan 1001
     vrf member Tenant-1
     ip forward
     no shutdown
