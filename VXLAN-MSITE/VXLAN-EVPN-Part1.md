@@ -195,8 +195,6 @@ PfxRcd
 
 ### Define L2VNI VLAN to VXLAN mapping
 
-**1. Apply in both Site1-L1 and Site1-L2**
-
 ```python
 feature vn-segment-vlan-based
 

@@ -1,5 +1,7 @@
 # VXLAN BGP EVPN - Site-2
 
+## PART-1 (VXLAN UNDERLAY)
+
 ### Site2-Leaf1 UNDERLAY
 
 ```python
@@ -76,16 +78,18 @@ interface ethernet1/1
 
 ### Troubleshoot the Underlay 
 
-**1. From Site1-Spine101 check OSPF neighbors**
+**1. From Site2-Spine101 check OSPF neighbors**
 
 ```python
-Site1-S101(config-if)# show ip ospf neighbors 
+Spine101_S2# show ip ospf neighbors
  OSPF Process ID UNDERLAY VRF default
  Total number of neighbors: 2
  Neighbor ID     Pri State            Up Time  Address         Interface
- 1.0.0.1           1 FULL/ -          00:01:05 1.0.0.1         Eth1/1 
- 1.0.0.2           1 FULL/ -          00:00:05 1.0.0.2         Eth1/2 
+ 2.0.0.1           1 FULL/ -          01:47:05 2.0.0.1         Eth1/1 
+ 2.0.0.111         1 FULL/ -          01:46:56 2.0.0.111       Eth1/2 
 ```
+
+## PART-2 (VXLAN OVERLAY)
 
 ### Site2-Leaf1 OVERLAY
 
@@ -167,11 +171,24 @@ interface nve1
     no shutdown
 ```
 
-## Define L2VNI VLAN to VXLAN mapping
+### Troubleshoot the Overlay 
 
-**1. Apply in both Site1-L1 and Site1-L2**
+**1. From Site2-Spine101 check BGP L2VPN EVPN neighbors**
 
-```javascript
+```python
+Spine101_S2# show ip ospf neighbors
+ OSPF Process ID UNDERLAY VRF default
+ Total number of neighbors: 2
+ Neighbor ID     Pri State            Up Time  Address         Interface
+ 2.0.0.1           1 FULL/ -          01:47:05 2.0.0.1         Eth1/1 
+ 2.0.0.111         1 FULL/ -          01:46:56 2.0.0.111       Eth1/2 
+```
+
+## PART-3 (VLAN to VXLAN Mapping L2VNI/L3VNI)
+
+### Define L2VNI VLAN to VXLAN mapping
+
+```python
 feature vn-segment-vlan-based
 
 vlan 10
@@ -186,13 +203,11 @@ interface nve1
         ingress-replication protocol bgp
     member vni 10020
         ingress-replication protocol bgp
-
 ```
-
 
 ### Define L3VNI VLAN to VXLAN mapping
 
-```javascript
+```python
 feature interface-vlan
 
 vrf context Tenant-1
@@ -217,11 +232,10 @@ interface nve1
     member vni 100001 associate-vrf
 ```
 
-
 ### Configure Anycast GW on Site2-L1 and Site2-L2
 
-```javascript
-fabric forwarding anycast-gateway-mac 0001.0001.0001
+```python
+fabric forwarding anycast-gateway-mac 0002.0002.0002
 
 interface vlan 10
     vrf member Tenant-1
