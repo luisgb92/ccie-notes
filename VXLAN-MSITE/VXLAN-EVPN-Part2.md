@@ -98,7 +98,7 @@ router bgp 65002
     router-id 2.0.0.1
     address-family l2vpn evpn
     template peer Leaf2Spine
-        remote-as 65001
+        remote-as 65002
         update-source loo0
         address-family l2vpn evpn
             send-community both
