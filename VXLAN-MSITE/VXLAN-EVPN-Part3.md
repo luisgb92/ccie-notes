@@ -196,6 +196,5 @@ router bgp 65100
         inherit peer DCI2BGW
         address-family l2vpn evpn
             rewrite-evpn-rt-asn
-
 ```
 
