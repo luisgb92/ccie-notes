@@ -16,7 +16,7 @@ interface loo0
     no shutdown
 
 interface loo1
-    ip address 1.0.1.1/32 tag 54321
+    ip address 1.0.1.111/32 tag 54321
     ip router ospf UNDERLAY area 0
     no shutdown
 
@@ -57,7 +57,7 @@ interface loo0
     no shutdown
 
 interface loo1
-    ip address 2.0.1.1/32 tag 54321
+    ip address 2.0.1.111/32 tag 54321
     ip router ospf UNDERLAY area 0
     no shutdown
 
