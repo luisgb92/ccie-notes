@@ -51,9 +51,7 @@ Run the following recommended command in your system terminal or command prompt
 Requests library allows you to send HTTP/1.1 requests extremely easily. There's no need to manually add query strings to your URLs, or to form-encode your PUT & POST
 
 ```python
-(venv) lberista@CSCO-W-PF3RHSV8:~/ansible_ndfc$ pip install requests
-Collecting requests
-  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+pip install requests
 ```
 
 Verify the installation status:
@@ -70,4 +68,19 @@ charset-normalizer==3.4.7
 idna==3.18
 requests==2.34.2
 urllib3==2.7.0
+```
+
+After completing the Python setup and project directory setup. Install Ansible and Ansible collection for NDFC.
+
+# Install ANSIBLE
+
+Navigate to the Ansible code directory in the project:
+
+```python
+cd /home/ccie-notes/NDFC
+```
+
+```python
+pip install ansible
+ansible-galaxy collection install cisco.dcnm
 ```
