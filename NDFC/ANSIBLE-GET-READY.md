@@ -55,3 +55,19 @@ Requests library allows you to send HTTP/1.1 requests extremely easily. There's 
 Collecting requests
   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
 ```
+
+Verify the installation status:
+
+```python
+pip freeze 
+```
+
+You should see the installed packages that are listed as an example:
+
+```python
+certifi==2026.6.17
+charset-normalizer==3.4.7
+idna==3.18
+requests==2.34.2
+urllib3==2.7.0
+```
