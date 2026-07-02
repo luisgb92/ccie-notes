@@ -78,6 +78,8 @@ Navigate to the Ansible code directory in the project:
 cd /home/ccie-notes/NDFC
 ```
 
+Install Ansible and the NDFC collection for Ansible:
+
 ```python
 pip install ansible
 ansible-galaxy collection install cisco.dcnm

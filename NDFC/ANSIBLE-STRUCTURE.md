@@ -7,7 +7,7 @@ Following is the typical project directory structure of an Ansible project:
 ansible-project/
 ├── ansible.cfg       # Ansible configuration file
 ├── inventory         # Directory for inventory files
-│   ├── hosts         # Default inventory file
+│   ├── hosts.yml     # Default inventory file
 │   └── group_vars    # Directory to define variables for groups
 │       └── group1.yml
 │   └── host_vars     # Directory to define variables for specific hosts
@@ -57,10 +57,10 @@ all:
     dcnm_controllers:
       hosts:
         ndfc1:
-          ansible_host: 192.168.2.10
+          ansible_host: 10.31.125.222
 
-        ndfc2:
-          ansible_host: 192.168.2.11
+        #ndfc2:
+          #ansible_host: 192.168.2.11
 
 ```
 ### Top Level: all
