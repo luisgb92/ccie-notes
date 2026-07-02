@@ -81,3 +81,25 @@ These variables apply to every host in the inventory.
 vars:
 ```
 
+### Children Groups
+
+Ansible organizes hosts into groups.
+
+```yaml
+children:
+```
+
+Here is one group:
+
+```yaml
+dcnm_controllers
+```
+
+### Group: dcnm_controllers
+
+This group contains every DCNM/NDFC controller you want Ansible to manage.
+
+```yaml
+dcnm_controllers:
+```
+
