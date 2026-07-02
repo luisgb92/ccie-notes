@@ -44,9 +44,7 @@ lberista@CSCO-W-PF3RHSV8:~/ansible_ndfc$ source venv/bin/activate
 (venv) lberista@CSCO-W-PF3RHSV8:~/ansible_ndfc$ 
 ```
 
-### 6. Install the Requests HTTP library.
-
-Run the following recommended command in your system terminal or command prompt
+### 6. Install the Requests HTTP library:
 
 Requests library allows you to send HTTP/1.1 requests extremely easily. There's no need to manually add query strings to your URLs, or to form-encode your PUT & POST
 
