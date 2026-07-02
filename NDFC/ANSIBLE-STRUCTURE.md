@@ -40,6 +40,68 @@ Think of it this way:
 |inventory.yml |Lists the hosts and connection variables |
 |playbook.yml | Defines the tasks to execute |
 
+### What goes inside ansible.cfg?
+
+Typically it contains:
+
+* Default inventory
+* Default remote user
+* Collection paths
+* Roles path
+* Logging
+* SSH options
+* Plugin configuration
+* Retry behavior
+* Timeout values
+
+### Typical ansible.cfg for Cisco NDFC
+
+```INI
+
+[defaults]
+
+# Inventory file
+inventory = inventory/hosts.yml
+
+# Don't ask for SSH host keys
+host_key_checking = False
+
+# Don't create retry files
+retry_files_enabled = False
+
+# Faster execution
+forks = 10
+
+# Disable cowsay :)
+nocows = True
+
+# Log file
+log_path = ansible.log
+
+# Collections location
+collections_paths = ./collections/
+
+# Pretty output
+stdout_callback = yaml
+
+# Don't gather facts unless requested
+gathering = explicit
+
+[inventory]
+
+enable_plugins = yaml
+
+[persistent_connection]
+
+connect_timeout = 30
+command_timeout = 60
+
+[httpapi]
+
+# Timeout for HTTP API connections
+timeout = 60
+```
+
 ## Inventory
 
 Ansible automates tasks on managed nodes or “hosts” in your infrastructure by using a list or group of lists known as inventory. Ansible composes its inventory from one or more ‘inventory sources’. 
