@@ -61,7 +61,7 @@ Typically it contains:
 [defaults]
 
 # Inventory file
-inventory = inventory/hosts.yml
+inventory = inventory.yml
 
 # Don't ask for SSH host keys
 host_key_checking = False
@@ -72,9 +72,6 @@ retry_files_enabled = False
 # Faster execution
 forks = 10
 
-# Disable cowsay :)
-nocows = True
-
 # Log file
 log_path = ansible.log
 
@@ -83,9 +80,6 @@ collections_paths = ./collections/
 
 # Pretty output
 stdout_callback = yaml
-
-# Don't gather facts unless requested
-gathering = explicit
 
 [inventory]
 
