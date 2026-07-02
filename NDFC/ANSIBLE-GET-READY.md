@@ -44,14 +44,14 @@ lberista@CSCO-W-PF3RHSV8:~/ansible_ndfc$ source venv/bin/activate
 (venv) lberista@CSCO-W-PF3RHSV8:~/ansible_ndfc$ 
 ```
 
-### 6. To install the Requests HTTP library.
+### 6. Install the Requests HTTP library.
 
 Run the following recommended command in your system terminal or command prompt
 
-Requests allows you to send HTTP/1.1 requests extremely easily. There's no need to manually add query strings to your URLs, or to form-encode your PUT & POST
+Requests library allows you to send HTTP/1.1 requests extremely easily. There's no need to manually add query strings to your URLs, or to form-encode your PUT & POST
 
 ```python
-(venv) lberista@CSCO-W-PF3RHSV8:~/ansible_ndfc$ **pip install requests**
+(venv) lberista@CSCO-W-PF3RHSV8:~/ansible_ndfc$ pip install requests
 Collecting requests
   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
 ```
