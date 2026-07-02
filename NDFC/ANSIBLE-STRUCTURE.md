@@ -29,6 +29,52 @@ ansible-project/
 └── templates         # Directory for Jinja2 templates
 ```
 
+Ansible automates tasks on managed nodes or “hosts” in your infrastructure by using a list or group of lists known as inventory. Ansible composes its inventory from one or more ‘inventory sources’. While one of these sources can be the list of host names you pass at the command line, most Ansible users create inventory files. Your inventory defines the managed nodes you automate and the variables associated with those hosts. You can also specify groups. 
+
+Groups allow you to reference multiple associated hosts to target for your automation or to define variables in bulk. Once you define your inventory, you use patterns to select the hosts or groups you want Ansible to run against.
+
+```yaml
+
+all:
+  vars:
+    ansible_connection: httpapi
+    ansible_network_os: cisco.dcnm.dcnm
+    ansible_httpapi_use_ssl: true
+    ansible_httpapi_validate_certs: false
+    ansible_httpapi_login_domain: local
+    ansible_user: admin
+    ansible_password: ins3965!
+
+  children:
+    dcnm_controllers:
+      hosts:
+        ndfc1:
+          ansible_host: 192.168.2.10
+
+        ndfc2:
+          ansible_host: 192.168.2.11
+
+```
+
 This YAML file is an Ansible inventory. An inventory tells Ansible which devices to manage and what connection variables to use for those devices.
 
 Let's break it down.
+
+## Top Level: all
+
+all is the root group in every Ansible inventory.
+
+Every host belongs to this group, so variables defined under all.vars are inherited by every host unless overridden.
+
+```yaml
+all:
+```
+
+## Global Variables (vars)
+
+These variables apply to every host in the inventory.
+
+```yaml
+vars:
+```
+
