@@ -28,6 +28,16 @@ ansible-project/
 ├── files             # Directory for static files to copy to hosts
 └── templates         # Directory for Jinja2 templates
 ```
+## Ansible Config file
+
+The ansible.cfg file is Ansible's configuration file. It controls **how Ansible behaves**, while the inventory tells Ansible **what devices to manage**.
+
+Think of it this way:
+
+|File | Purpose |
+|ansible.cfg | Configures Ansible itself (behavior, defaults, plugins, paths, etc.) |
+|inventory.yml |Lists the hosts and connection variables |
+|playbook.yml | Defines the tasks to execute |
 
 ## Inventory
 
